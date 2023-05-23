@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom/';
 import { addUser, fetchToken } from '../redux/actions/index';
+import Loading from '../components/Loading';
 
 class Login extends Component {
   state = {
     emailInput: '',
     nameInput: '',
+    isLoading: false,
   };
 
   handleChange = ({ target }) => {
@@ -15,51 +16,63 @@ class Login extends Component {
     this.setState({ [name]: value });
   };
 
-  handlePlay = () => {
-    const { dispatch } = this.props;
+  handlePlay = async () => {
+    this.setState({ isLoading: true });
+    const { dispatch, history } = this.props;
+    const { token } = await fetchToken();
+    localStorage.setItem('token', token);
     dispatch(addUser({ ...this.state }));
-    dispatch(fetchToken());
+    this.setState({ isLoading: true });
+    history.push('/game');
   };
 
   render() {
-    const { token, history } = this.props;
-    const { emailInput, nameInput } = this.state;
+    const { history } = this.props;
+    const { emailInput, nameInput, isLoading } = this.state;
     const emailValidation = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (token) { history.push('/game'); }
     return (
       <div>
-        <label htmlFor="inputname">
-          Nome:
-          <input
-            type="name"
-            name="nameInput"
-            value={ nameInput }
-            id="inputName"
-            data-testid="input-player-name"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="inputEmail">
-          E-mail:
-          <input
-            type="email"
-            name="emailInput"
-            value={ emailInput }
-            id="inputEmail"
-            data-testid="input-gravatar-email"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          disabled={ !(emailValidation.test(emailInput) && nameInput.length > 0) }
-          data-testid="btn-play"
-          onClick={ () => this.handlePlay() }
-        >
-          Play
-        </button>
-        <Link to="/settings">
-          <button data-testid="btn-settings">Settings</button>
-        </Link>
+        {
+          isLoading
+            ? <Loading /> : (
+              <div>
+                <label htmlFor="inputname">
+                  Nome:
+                  <input
+                    type="name"
+                    name="nameInput"
+                    value={ nameInput }
+                    id="inputName"
+                    data-testid="input-player-name"
+                    onChange={ this.handleChange }
+                  />
+                </label>
+                <label htmlFor="inputEmail">
+                  E-mail:
+                  <input
+                    type="email"
+                    name="emailInput"
+                    value={ emailInput }
+                    id="inputEmail"
+                    data-testid="input-gravatar-email"
+                    onChange={ this.handleChange }
+                  />
+                </label>
+                <button
+                  disabled={ !(emailValidation.test(emailInput) && nameInput.length > 0) }
+                  data-testid="btn-play"
+                  onClick={ () => this.handlePlay() }
+                >
+                  Play
+                </button>
+                <button
+                  data-testid="btn-settings"
+                  onClick={ () => history.push('/settings') }
+                >
+                  Settings
+                </button>
+              </div>)
+        }
       </div>
     );
   }
