@@ -1,6 +1,6 @@
 import React from 'react';
 import App from '../App';
-import { screen, act } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux'
 import { fetchToken } from '../redux/actions';
@@ -35,7 +35,7 @@ describe('Testa a página de login', () => {
 
      expect(heading).toBeInTheDocument();
   });
-  it('Testa se o botão Play tem o comportamento esperado', () => {
+  it('Testa se o botão Play tem o comportamento esperado', async () => {
     renderWithRouterAndRedux(<App />)
 
      // Pegando campos e botões
@@ -55,5 +55,10 @@ describe('Testa a página de login', () => {
     const loadingEl = screen.getByRole('heading', { name: /loading/i });
 
     expect(loadingEl).toBeInTheDocument();
+    
+    await waitFor(() => {
+      const nameEl = screen.getByTestId('header-player-name');
+      expect(nameEl).toBeInTheDocument();
+    }, {timeout: 5000});
 });
 });
