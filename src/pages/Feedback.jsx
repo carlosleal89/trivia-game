@@ -5,8 +5,15 @@ import { connect } from 'react-redux';
 
 class Feedback extends Component {
   render() {
-    const { user: { nameInput, emailInput, score }, history } = this.props;
+    const {
+      user: { nameInput, emailInput },
+      score: { score },
+      history,
+    } = this.props;
+    // const { score } = this.state;
+    // console.log('score', score);
     const hash = md5(emailInput).toString();
+    const valueScore = 3;
     return (
       <div>
         <header>
@@ -18,25 +25,25 @@ class Feedback extends Component {
           <h3 data-testid="header-player-name">{ nameInput }</h3>
           <h3 data-testid="header-score">{ score }</h3>
         </header>
-        <div data-testid="feedback-text">
-          <p>Could be better...</p>
-          {' '}
-          :
-          {' '}
-          <p>Well Done!</p>
+        <div>
+          { score >= valueScore ? (<p data-testid="feedback-text">Well Done!</p>)
+            : (<p data-testid="feedback-text">Could be better...</p>)}
+
         </div>
-        <button
-          data-testid="btn-play-again"
-          onClick={ () => history.push('/login') }
-        >
-          Play Again
-        </button>
-        <button
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ranking
-        </button>
+        <div>
+          <button
+            data-testid="btn-play-again"
+            onClick={ () => history.push('/login') }
+          >
+            Play Again
+          </button>
+          <button
+            data-testid="btn-ranking"
+            onClick={ () => history.push('/ranking') }
+          >
+            Ranking
+          </button>
+        </div>
       </div>
     );
   }
@@ -44,6 +51,7 @@ class Feedback extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.login.user,
+  score: state.player.score,
 });
 
 Feedback.propTypes = {
