@@ -1,9 +1,7 @@
 const ADD_USER = 'ADD_USER';
-const REQUEST_TOKEN = 'REQUEST_TOKEN';
 const GET_TOKEN = 'GET_TOKEN';
 
 export {
   ADD_USER,
-  REQUEST_TOKEN,
   GET_TOKEN,
 };
