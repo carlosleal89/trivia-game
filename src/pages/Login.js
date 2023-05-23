@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addUser, fetchToken } from '../redux/actions/index';
+import { addUser, fetchToken, fetchQuestions } from '../redux/actions/index';
 import Loading from '../components/Loading';
 
 class Login extends Component {
@@ -22,7 +22,8 @@ class Login extends Component {
     const { token } = await fetchToken();
     localStorage.setItem('token', token);
     dispatch(addUser({ ...this.state }));
-    this.setState({ isLoading: true });
+    await dispatch(fetchQuestions(token));
+    this.setState({ isLoading: false });
     history.push('/game');
   };
 
