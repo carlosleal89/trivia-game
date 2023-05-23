@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import './Game.css';
 
 const timer = 30000;
 const oneSec = 1000;
@@ -24,8 +25,15 @@ class Game extends Component {
     this.setState({ timerStarted: true });
   };
 
-  correctAnswer = () => {
-    console.log();
+  checkAnswer = () => {
+    const answers = document.querySelectorAll('.answer');
+    answers.forEach((el) => {
+      const correctAnswer = document
+        .querySelector('button[data-testid="correct-answer"]');
+      if (el === correctAnswer) {
+        el.className = 'correct-answer';
+      } else el.className = 'incorrect-answer';
+    });
   };
 
   render() {
@@ -56,9 +64,10 @@ class Game extends Component {
               return (
                 <button
                   disabled={ remaining === 0 }
+                  className="answer"
                   data-testid={ testId }
                   key={ index }
-                  onClick={ this.correctAnswer }
+                  onClick={ this.checkAnswer }
                 >
                   {answer}
                 </button>
