@@ -5,7 +5,6 @@ import Feedback from './pages/Feedback';
 import Game from './pages/Game';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
-import Game from './pages/Game';
 import Ranking from './pages/Ranking';
 
 class App extends React.Component {
