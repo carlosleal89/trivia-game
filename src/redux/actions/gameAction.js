@@ -1,5 +1,3 @@
 const GET_QUESTIONS = 'GET_QUESTIONS';
 
-export {
-  GET_QUESTIONS,
-};
+export { GET_QUESTIONS };

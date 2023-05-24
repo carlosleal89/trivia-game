@@ -7,11 +7,9 @@ class Feedback extends Component {
   render() {
     const {
       user: { nameInput, emailInput },
-      score: { score },
+      score,
       history,
     } = this.props;
-    // const { score } = this.state;
-    // console.log('score', score);
     const hash = md5(emailInput).toString();
     const valueScore = 3;
     return (
@@ -33,7 +31,7 @@ class Feedback extends Component {
         <div>
           <button
             data-testid="btn-play-again"
-            onClick={ () => history.push('/login') }
+            onClick={ () => history.push('/') }
           >
             Play Again
           </button>

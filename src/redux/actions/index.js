@@ -1,5 +1,6 @@
 import { ADD_USER } from './loginAction';
 import { GET_QUESTIONS } from './gameAction';
+import { ADD_SCORE } from './playerAction';
 
 // Login Actions
 export const addUser = (user) => ({ type: ADD_USER, payload: user });
@@ -14,7 +15,7 @@ export const fetchToken = async () => {
   }
 };
 
-// Game actions
+// Game Actions
 export const getQuestions = (questions) => ({ type: GET_QUESTIONS, questions });
 
 export const fetchQuestions = (token) => async (dispatch) => {
@@ -26,3 +27,6 @@ export const fetchQuestions = (token) => async (dispatch) => {
     console.error(error);
   }
 };
+
+// Player Actions
+export const addScore = (score, user) => ({ type: ADD_SCORE, score, user });
