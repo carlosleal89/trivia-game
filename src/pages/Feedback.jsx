@@ -8,10 +8,11 @@ class Feedback extends Component {
     const {
       user: { nameInput, emailInput },
       score,
+      assertions,
       history,
     } = this.props;
     const hash = md5(emailInput).toString();
-    const valueScore = 3;
+    const goodAssertion = 3;
     return (
       <div>
         <header>
@@ -24,9 +25,10 @@ class Feedback extends Component {
           <h3 data-testid="header-score">{ score }</h3>
         </header>
         <div>
-          { score >= valueScore ? (<p data-testid="feedback-text">Well Done!</p>)
+          { assertions >= goodAssertion ? (<p data-testid="feedback-text">Well Done!</p>)
             : (<p data-testid="feedback-text">Could be better...</p>)}
-
+          <h3 data-testid="feedback-total-score">{ score }</h3>
+          <h3 data-testid="feedback-total-question">{ assertions }</h3>
         </div>
         <div>
           <button
@@ -50,6 +52,7 @@ class Feedback extends Component {
 const mapStateToProps = (state) => ({
   user: state.login.user,
   score: state.player.score,
+  assertions: state.player.assertions,
 });
 
 Feedback.propTypes = {

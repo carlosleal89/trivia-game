@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Ranking extends React.Component {
   render() {
-    const rankingData = JSON.parse(localStorage.getItem('ranking')) || [];
+    const rankingData = JSON.parse(localStorage.getItem('ranking'));
     const sortedRanking = rankingData.sort((a, b) => b.score - a.score);
     console.log(sortedRanking);
     return (
