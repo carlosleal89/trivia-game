@@ -21,7 +21,8 @@ class Login extends Component {
     const { dispatch, history } = this.props;
     const { token } = await fetchToken();
     localStorage.setItem('token', token);
-    dispatch(addUser({ ...this.state }));
+    const { nameInput, emailInput } = this.state;
+    dispatch(addUser({ nameInput, emailInput }));
     await dispatch(fetchQuestions(token));
     this.setState({ isLoading: false });
     history.push('/game');
