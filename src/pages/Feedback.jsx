@@ -2,8 +2,15 @@ import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { clearScore } from '../redux/actions';
 
 class Feedback extends Component {
+  playAgain = () => {
+    const { history, dispatch } = this.props;
+    history.push('/');
+    dispatch(clearScore());
+  };
+
   render() {
     const {
       user: { nameInput, emailInput },
@@ -33,7 +40,7 @@ class Feedback extends Component {
         <div>
           <button
             data-testid="btn-play-again"
-            onClick={ () => history.push('/') }
+            onClick={ this.playAgain }
           >
             Play Again
           </button>

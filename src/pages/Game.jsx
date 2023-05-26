@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import './Game.css';
 import { addScore } from '../redux/actions';
@@ -60,9 +61,11 @@ class Game extends Component {
     const questions = JSON.parse(localStorage.getItem('questions'));
     const { results } = questions;
     const { difficulty } = results[questionIndex];
+    let score = 0;
     if (testid === correctId) {
-      dispatch(addScore(minimumScore + (remaining * difficulties[difficulty]), user));
-    }
+      score = minimumScore + (remaining * difficulties[difficulty]);
+      dispatch(addScore(score, user));
+    } else { dispatch(addScore(score, user)); }
 
     // Zerando timer
     this.resetTimer();
@@ -72,6 +75,7 @@ class Game extends Component {
     const { history } = this.props;
     const { questionIndex } = this.state;
     if (questionIndex === maxQuestions) {
+      this.setLocalStorage();
       history.push('/feedback');
     } else {
       this.resetTimer();
@@ -83,6 +87,21 @@ class Game extends Component {
         answered: false,
       });
     }
+  };
+
+  setLocalStorage = () => {
+    let previousRanking = [];
+    const { user, score } = this.props;
+    if (localStorage.getItem('ranking')) {
+      previousRanking = JSON.parse(localStorage.getItem('ranking'));
+    }
+    const player = {
+      name: user.nameInput,
+      score,
+      picture: `https://www.gravatar.com/avatar/${md5(user.emailInput).toString()}`,
+    };
+    previousRanking.push(player);
+    localStorage.setItem('ranking', JSON.stringify(previousRanking));
   };
 
   resetTimer = () => {
@@ -147,6 +166,7 @@ class Game extends Component {
 const mapStateToProps = (state) => ({
   questions: state.game.questions,
   user: state.login.user,
+  score: state.player.score,
 });
 
 Game.propTypes = ({
