@@ -15,8 +15,8 @@ class Ranking extends React.Component {
               alt="foto de perfil"
               data-testid={ `player-image-${index}` }
             />
-            <span data-testid={ `player-name-${index}` }>{player.name}</span>
-            <span data-testid={ `player-score-${index}` }>{player.score}</span>
+            <h3 data-testid={ `player-name-${index}` }>{ `${player.name}` }</h3>
+            <h3 data-testid={ `player-score-${index}` }>{ player.score }</h3>
           </div>
         ))}
         <Link to="/" data-testid="btn-go-home">Go to Home</Link>
