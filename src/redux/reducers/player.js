@@ -8,22 +8,9 @@ const INITIAL_STATE = {
   gravatarEmail: '',
 };
 
-// let previousRanking = [];
-// if (localStorage.getItem('ranking')) {
-//   previousRanking = JSON.parse(localStorage.getItem('ranking'));
-// }
-
 const playerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_SCORE:
-    // localStorage.setItem('ranking', JSON.stringify([
-    //   ...previousRanking,
-    //   {
-    //     name: action.user.nameInput,
-    //     score: state.score + action.score,
-    //     picture: `https://www.gravatar.com/avatar/${md5(action.user.emailInput).toString()}`,
-    //   },
-    // ]));
     return {
       ...state,
       name: action.user.nameInput,

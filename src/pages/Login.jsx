@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addUser, fetchToken, fetchQuestions } from '../redux/actions/index';
+import { addUser, fetchToken, fetchQuestions, clearScore } from '../redux/actions/index';
 import Loading from '../components/Loading';
 
 class Login extends Component {
@@ -25,6 +25,7 @@ class Login extends Component {
     dispatch(addUser({ nameInput, emailInput }));
     await dispatch(fetchQuestions(token));
     this.setState({ isLoading: false });
+    dispatch(clearScore());
     history.push('/game');
   };
 

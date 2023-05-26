@@ -17,28 +17,28 @@ describe('Testa a página de feedbacks', () => {
     screen.getByTestId('feedback-total-question');
   });
 
-  // it('Testa o botão de jogar novamente', async () => {
-  //   const { history } = renderWithRouterAndRedux(<Feedback />);
-  //   const btnPlay = screen.getByTestId('btn-play-again');
-  //   await act( async () => {
-  //     userEvent.click(btnPlay)
-  //     await waitFor(() => {
-  //       const {pathname} = history.location;
-  //       expect(pathname).toBe('/')
-  //     });
-  //   }, {timeout: 3000});
+  it('Testa o botão de jogar novamente', async () => {
+    const { history } = renderWithRouterAndRedux(<Feedback />);
+    const btnPlay = screen.getByTestId('btn-play-again');
+    await act( async () => {
+      userEvent.click(btnPlay)
+      await waitFor(() => {
+        const {pathname} = history.location;
+        expect(pathname).toBe('/')
+      });
+    }, {timeout: 3000});
 
-  // });
+  });
 
-  // it('Testa o botão de jogar novamente', async () => {
-  //   const { history } = renderWithRouterAndRedux(<Feedback />);
-  //   const btnRanking = screen.getByTestId('btn-ranking');
-  //   await act( async () => {
-  //     userEvent.click(btnRanking)
-  //     await waitFor(() => {
-  //       const {pathname} = history.location;
-  //       expect(pathname).toBe('/ranking')
-  //     },{timeout: 3000});
-  //   })
-  // })
+  it('Testa o botão de jogar novamente', async () => {
+    const { history } = renderWithRouterAndRedux(<Feedback />);
+    const btnRanking = screen.getByTestId('btn-ranking');
+    await act( async () => {
+      userEvent.click(btnRanking)
+      await waitFor(() => {
+        const {pathname} = history.location;
+        expect(pathname).toBe('/ranking')
+      },{timeout: 3000});
+    })
+  })
 });

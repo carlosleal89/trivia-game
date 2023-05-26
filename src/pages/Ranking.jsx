@@ -11,12 +11,12 @@ class Ranking extends React.Component {
         {sortedRanking.map((player, index) => (
           <div key={ index }>
             <img
-              src={ `https://www.gravatar.com/avatar/${player.hash}` }
+              src={ player.picture }
               alt="foto de perfil"
               data-testid={ `player-image-${index}` }
             />
             <h3 data-testid={ `player-name-${index}` }>{ `${player.name}` }</h3>
-            <h3 data-testid={ `player-score-${index}` }>{ player.score }</h3>
+            <h3 data-testid={ `player-score-${index}` }>{ `${player.score}` }</h3>
           </div>
         ))}
         <Link to="/" data-testid="btn-go-home">Go to Home</Link>
