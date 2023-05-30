@@ -137,7 +137,7 @@ class Game extends Component {
               if (answer === correct) { testId = 'correct-answer'; }
               return (
                 <button
-                  disabled={ remaining === 0 }
+                  disabled={ remaining === 0 || answered }
                   className="answer"
                   data-testid={ testId }
                   key={ index }
