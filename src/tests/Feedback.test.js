@@ -29,7 +29,7 @@ describe('Testa a página de feedbacks', () => {
     screen.getByTestId('feedback-total-question');
   });
 
-  it('Testa o botão de jogar novamente', async () => {
+  it('Testa o botão de jogar novamente', () => {
     renderWithRouterAndRedux(<App />, state, feedbackRoute);
     const btnPlay = screen.getByTestId('btn-play-again');
     expect(btnPlay).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe('Testa a página de feedbacks', () => {
     expect(nameEl).toBeInTheDocument();
   });
 
-  it('Testa o botão de Ranking', async () => {
+  it('Testa o botão de Ranking', () => {
     renderWithRouterAndRedux(<App />, state, feedbackRoute);
     const btnRank = screen.getByTestId('btn-ranking');
     expect(btnRank).toBeInTheDocument();
