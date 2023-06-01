@@ -1,6 +1,6 @@
 import { ADD_USER } from './loginAction';
 import { GET_QUESTIONS } from './gameAction';
-import { ADD_SCORE } from './playerAction';
+import { ADD_SCORE, CLEAR_SCORE } from './playerAction';
 
 // Login Actions
 export const addUser = (user) => ({ type: ADD_USER, payload: user });
@@ -30,3 +30,5 @@ export const fetchQuestions = (token) => async (dispatch) => {
 
 // Player Actions
 export const addScore = (score, user) => ({ type: ADD_SCORE, score, user });
+
+export const clearScore = () => ({ type: CLEAR_SCORE });

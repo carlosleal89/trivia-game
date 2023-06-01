@@ -1,10 +1,22 @@
 import React from 'react';
 import Feedback from '../pages/Feedback';
-import { screen, act } from '@testing-library/react';
+import App from '../App'
+import { screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 
 describe('Testa a página de feedbacks', () => {
+  const state = {
+    player: {
+        name: "Carlos",
+        assertions: 5,
+        score: 200,
+        gravatarEmail: "https://www.gravatar.com/avatar/4deb6e56d98aaaedcd92429e03fa59ce",
+    },
+};
+ 
+  const feedbackRoute = "/feedback";
+
   it('Testa se a página contém as informações do header, assim como o score total, os acertos e os botões', () => {
     renderWithRouterAndRedux(<Feedback />);
 
@@ -17,28 +29,23 @@ describe('Testa a página de feedbacks', () => {
     screen.getByTestId('feedback-total-question');
   });
 
-  it('Testa o botão de jogar novamente', async () => {
-    const { history } = renderWithRouterAndRedux(<Feedback />);
+  it('Testa o botão de jogar novamente', () => {
+    renderWithRouterAndRedux(<App />, state, feedbackRoute);
     const btnPlay = screen.getByTestId('btn-play-again');
-    await act( async () => {
-      userEvent.click(btnPlay)
-      await waitFor(() => {
-        const {pathname} = history.location;
-        expect(pathname).toBe('/')
-      });
-    });
-
+    expect(btnPlay).toBeInTheDocument();
+    act(()=>userEvent.click(btnPlay));
+    const nameEl = screen.getByText(/nome:/i);
+    expect(nameEl).toBeInTheDocument();
   });
 
-  it('Testa o botão de jogar novamente', async () => {
-    const { history } = renderWithRouterAndRedux(<Feedback />);
-    const btnRanking = screen.getByTestId('btn-ranking');
-    await act( async () => {
-      userEvent.click(btnRanking)
-      await waitFor(() => {
-        const {pathname} = history.location;
-        expect(pathname).toBe('/ranking')
-      });
-    })
+  it('Testa o botão de Ranking', () => {
+    renderWithRouterAndRedux(<App />, state, feedbackRoute);
+    const btnRank = screen.getByTestId('btn-ranking');
+    expect(btnRank).toBeInTheDocument();
+    const rank = []
+    localStorage.setItem('ranking', JSON.stringify(rank));
+    act(()=>userEvent.click(btnRank));
+    const rankEl = screen.getByRole('heading', {name: /ranking/i})
+    expect(rankEl).toBeInTheDocument();
   })
 });

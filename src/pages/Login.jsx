@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addUser, fetchToken, fetchQuestions } from '../redux/actions/index';
+import { addUser, fetchToken, fetchQuestions, clearScore } from '../redux/actions/index';
 import Loading from '../components/Loading';
+import './Login.css';
 
 class Login extends Component {
   state = {
@@ -25,6 +26,7 @@ class Login extends Component {
     dispatch(addUser({ nameInput, emailInput }));
     await dispatch(fetchQuestions(token));
     this.setState({ isLoading: false });
+    dispatch(clearScore());
     history.push('/game');
   };
 
@@ -33,7 +35,7 @@ class Login extends Component {
     const { emailInput, nameInput, isLoading } = this.state;
     const emailValidation = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return (
-      <div>
+      <div className="main-div">
         {
           isLoading
             ? <Loading /> : (
